@@ -1,2 +1,3 @@
+include ':lib_practice_api_object'
 include ':app'
 rootProject.name = "JavaWork"
