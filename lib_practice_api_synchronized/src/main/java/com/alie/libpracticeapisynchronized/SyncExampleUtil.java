@@ -25,7 +25,6 @@ public class SyncExampleUtil {
         thread2.start();
     }
 
-
     /**
      * 测试类锁1
      */
@@ -87,7 +86,6 @@ public class SyncExampleUtil {
         thread1.start();
         thread3.start();
     }
-
 
     /**
      * 测试 同步代码块
@@ -165,8 +163,6 @@ public class SyncExampleUtil {
         thread1.start();
         thread3.start();
     }
-
-
 
     /**
      * 测试 同步代码块和类的静态方法上同意吧所的作用效果

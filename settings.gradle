@@ -1,3 +1,4 @@
+include ':module_practice_synchronized'
 include ':lib_practice_api_synchronized'
 include ':lib_practice_api_object'
 include ':app'
