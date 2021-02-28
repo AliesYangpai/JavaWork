@@ -14,7 +14,7 @@ This module is a sample to create an ANR situation,in order to learn how to dete
 
 ## Create an ANR situation
 
-In order to learn how to detect and fix bug,I give a classic examle of Main Thread Sleep.Just read the code in [module_practice_anr] to get it And the logs I had already explored in  "extra/bugreport-sirius-OPM1.171019.019-2021-02-28-13-09-54.zip"
+In order to learn how to detect and fix bug,I give a classic examle of Main Thread Sleep.Just read the code in [module_practice_anr] to get it And the logs I had already explored in  "extra/"
 
 ## How to explore it
 
@@ -28,7 +28,7 @@ if your device has been root just follows:
 
 ### 2. Not root version
 if your device not root yet just follows:
-1.god To get All files use [adb bugreport],you well get all logs the anr info in bugreport-xxx-OPM1.171019.019-2021-02-28-13-09-54 file.
+1.To get All files use [adb bugreport],you well get all logs the anr info in bugreport-xxx-OPM1.171019.019-2021-02-28-13-09-54 file.
 
 ------
 
