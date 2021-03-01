@@ -36,13 +36,13 @@ It is most Importance part of solve ANR problems.I had already put the logs in "
 
 ### 1.Keywords
 
-try these keywords to locate your problem:   
-"VM TRACES AT LAST ANR"    
-"Cmd line" (your'd better have packege name to search just like "Cmd line: com.alie.modulepracticeanr")   
+try these keywords to locate your problem:
+"VM TRACES AT LAST ANR"
+"Cmd line" (your'd better have packege name to search just like "Cmd line: com.alie.modulepracticeanr")
 
 ### 2.Check them
 
-see [here](https://blog.csdn.net/yxz329130952/article/details/50087731) to get more  
+see [here](https://blog.csdn.net/yxz329130952/article/details/50087731) to get more.
 
 ------
 
