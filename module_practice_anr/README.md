@@ -27,8 +27,22 @@ if your device has been root just follows:
 2.To get All files use [adb bugreport],you well get all logs the anr info in bugreport-xxx-OPM1.171019.019-2021-02-28-13-09-54 file.
 
 ### 2. Not root version
+
 if your device not root yet just follows:
 1.god To get All files use [adb bugreport],you well get all logs the anr info in bugreport-xxx-OPM1.171019.019-2021-02-28-13-09-54 file.
+
+## How to detect it
+It is most Importance part of solve ANR problems.I had already put the logs in "module_practice_anr/extra/bugreport-sirius-OPM1.171019.019-2021-02-28-13-09-54.zip".All right Let's do it
+
+### 1.Keywords
+
+try these keywords to locate your problem:   
+"VM TRACES AT LAST ANR"    
+"Cmd line" (your'd better have packege name to search just like "Cmd line: com.alie.modulepracticeanr")   
+
+### 2.Check them
+
+see [here](https://blog.csdn.net/yxz329130952/article/details/50087731) to get more  
 
 ------
 
