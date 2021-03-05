@@ -1,3 +1,4 @@
+include ':lib_practice_api_lock'
 include ':module_practice_anr'
 include ':module_practice_synchronized'
 include ':lib_practice_api_synchronized'
