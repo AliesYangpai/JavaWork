@@ -1,3 +1,4 @@
+include ':module_practice_jni'
 include ':module_practice_memory_leak'
 include ':lib_practice_api_lock'
 include ':module_practice_anr'

@@ -10,3 +10,4 @@ This project is a java practice collection
 > * [module_practice_synchronized] module sample to show difference between object lock and class lock
 > * [module_practice_anr] module sample to show how produce ANR error and how to detect it
 > * [module_practice_memory_leak] module sample to show how to produce memory leak error
+> * [module_practice_jni] module sample to show how to jni
