@@ -35,7 +35,11 @@ public class MainActivity extends AppCompatActivity {
             short age = 55;
             String name = "alie";
             int[] array = {1,2,3,4,5,6};
-            do_Test_01_print_data(age,name,array);
+            do_test_01_print_data(age,name,array);
+        });
+        findViewById(R.id.btn3).setOnClickListener(v -> {
+            String[] array = {"Jordan","Brian","Iverson","Carter"};
+            do_test_02_print_data(array);
         });
     }
 
@@ -52,5 +56,11 @@ public class MainActivity extends AppCompatActivity {
      * @param name
      * @param array
      */
-    public native void do_Test_01_print_data(short age,String name,int[] array);
+    public native void do_test_01_print_data(short age,String name,int[] array);
+
+    /**
+     * do_Test_01 打印String数组
+     * @param array
+     */
+    public native void do_test_02_print_data(String[] array);
 }

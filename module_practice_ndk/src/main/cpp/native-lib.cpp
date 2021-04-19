@@ -21,7 +21,7 @@ void showArrayData(jint *p, jsize size) {
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_alie_modulepracticendk_MainActivity_do_1Test_101_1print_1data(
+Java_com_alie_modulepracticendk_MainActivity_do_1test_101_1print_1data(
         JNIEnv *env,
         jobject thiz,
         jshort age,
@@ -55,6 +55,17 @@ Java_com_alie_modulepracticendk_MainActivity_do_1Test_101_1print_1data(
      * 1:JNI_COMMIT -> 只刷新java数组，不释放
      * 2:JNI_ABORT -> java c++ 全部释放
      */
-    env->ReleaseIntArrayElements(array, p_array,0);
+    env->ReleaseIntArrayElements(array, p_array, 0);
 }
 
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_alie_modulepracticendk_MainActivity_do_1test_102_1print_1data(JNIEnv *env, jobject thiz,
+                                                                       jobjectArray array) {
+    jsize size = env->GetArrayLength(array);
+    for (int i = 0; i < size; i++) {
+        jstring str = static_cast<jstring>(env->GetObjectArrayElement(array, i));
+        const char* p_value = env->GetStringUTFChars(str, NULL);
+        __android_log_print(ANDROID_LOG_DEBUG, "XXX", "===jniData native array[%d] = %s",i,p_value);
+    }
+}
