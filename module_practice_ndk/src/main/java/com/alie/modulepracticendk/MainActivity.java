@@ -24,8 +24,9 @@ public class MainActivity extends AppCompatActivity {
 
     void init() {
         HolderJni holderJni = new HolderJni();
-        holderJni.doTest01(); //【ndk 打印】hello world
-        holderJni.doTest02(); //【ndk 打印】打印int String Int[]
-        holderJni.doTest03(); //【ndk 打印】打印String[]
+//        holderJni.doFirstIn();//【ndk 打印】hello world
+//        holderJni.doTest01(); //【ndk 打印】打印int String Int[]
+//        holderJni.doTest02(); //【ndk 打印】打印String[]
+        holderJni.doTest03(); //【ndk 打印】打印Student
     }
 }

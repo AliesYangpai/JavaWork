@@ -12,9 +12,9 @@ Java_com_alie_modulepracticendk_HolderJni_stringFromJNI(JNIEnv *env, jobject thi
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_alie_modulepracticendk_HolderJni_do_1test_101_1print_1data(JNIEnv *env,
-        jobject thiz,
-        jshort age, jstring name,
-        jintArray array) {
+                                                                    jobject thiz,
+                                                                    jshort age, jstring name,
+                                                                    jintArray array) {
     __android_log_print(ANDROID_LOG_DEBUG, "XXX", "===jniData native age:%d", age);
     /**
      * isCopy
@@ -58,4 +58,39 @@ Java_com_alie_modulepracticendk_HolderJni_do_1test_102_1print_1data(JNIEnv *env,
                             p_value);
         env->ReleaseStringUTFChars(str, p_value);
     }
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_alie_modulepracticendk_HolderJni_do_1test_103_1print_1data(JNIEnv *env, jobject thiz,
+                                                                    jstring content,
+                                                                    jobject student) {
+    const char *p_content = env->GetStringUTFChars(content, 0);
+    __android_log_print(ANDROID_LOG_DEBUG, "xxx", "===jniData native content = %s", p_content);
+    env->ReleaseStringUTFChars(content, p_content);
+    /**
+     * 类似于java中的反射调用
+     */
+    // 1.获取class
+    jclass stuClz = env->GetObjectClass(student);
+    // 2.通过class 获取方法 (class,方法名，签名)
+    jmethodID getAge = env->GetMethodID(stuClz, "getAge", "()S");
+    jmethodID getName = env->GetMethodID(stuClz, "getName", "()Ljava/lang/String;");
+    jmethodID setAge = env->GetMethodID(stuClz, "setAge", "(S)V");
+    jmethodID setName = env->GetMethodID(stuClz, "setName", "(Ljava/lang/String;)V");
+    // 3.使用env->CallShortMethod 调用方法
+    jshort age = env->CallShortMethod(student, getAge);
+    jstring jstringName = static_cast<jstring>(env->CallObjectMethod(student, getName));
+    const char *p_value = env->GetStringUTFChars(jstringName, 0);
+    __android_log_print(ANDROID_LOG_DEBUG, "xxx",
+                        "===jniData native student.age = %d student.name = %s", age, p_value);
+    env->ReleaseStringUTFChars(jstringName, p_value);
+
+    //=======set方法
+    env->CallVoidMethod(student,setAge,32);
+    jstring nameParam = env->NewStringUTF("大西瓜");
+    env->CallVoidMethod(student,setName,nameParam); // 此处不能传入String
+    //释放掉局部引用：
+    env->DeleteLocalRef(nameParam);
+
 }
