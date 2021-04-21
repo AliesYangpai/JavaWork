@@ -19,6 +19,9 @@ public class HolderJni {
         System.out.println("value = "+value);
     }
 
+    /**
+     * print short String int[]
+     */
     public void doTest02() {
         System.out.println("===doTest02");
         short age = 55;
@@ -27,6 +30,9 @@ public class HolderJni {
         do_test_01_print_data(age,name,array);
     }
 
+    /**
+     * print string[]
+     */
     public void doTest03() {
         System.out.println("===doTest03");
         String[] array = {"Jordan","Brian","Iverson","Carter"};

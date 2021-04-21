@@ -11,9 +11,10 @@ Java_com_alie_modulepracticendk_HolderJni_stringFromJNI(JNIEnv *env, jobject thi
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_alie_modulepracticendk_HolderJni_do_1test_101_1print_1data(JNIEnv *env, jobject thiz,
-                                                                    jshort age, jstring name,
-                                                                    jintArray array) {
+Java_com_alie_modulepracticendk_HolderJni_do_1test_101_1print_1data(JNIEnv *env,
+        jobject thiz,
+        jshort age, jstring name,
+        jintArray array) {
     __android_log_print(ANDROID_LOG_DEBUG, "XXX", "===jniData native age:%d", age);
     /**
      * isCopy
@@ -55,5 +56,6 @@ Java_com_alie_modulepracticendk_HolderJni_do_1test_102_1print_1data(JNIEnv *env,
         const char *p_value = env->GetStringUTFChars(str, NULL);
         __android_log_print(ANDROID_LOG_DEBUG, "XXX", "===jniData native array[%d] = %s", i,
                             p_value);
+        env->ReleaseStringUTFChars(str, p_value);
     }
 }
