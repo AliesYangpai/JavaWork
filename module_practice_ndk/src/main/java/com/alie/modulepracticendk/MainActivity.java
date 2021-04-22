@@ -26,9 +26,12 @@ public class MainActivity extends AppCompatActivity {
 
     void initData() {
         mNativeRawMgr.doHelloWorld();
-        mNativeRawMgr.doTest01();// 【ndk print】int
-        mNativeRawMgr.doTest02();// 【ndk print】String
-        mNativeRawMgr.doTest03();// 【ndk print】int[]
-        mNativeRawMgr.doTest04();// 【ndk print】String[]
+        mNativeRawMgr.doTest01();//【ndk print】int
+        mNativeRawMgr.doTest02();//【ndk print】String
+        mNativeRawMgr.doTest03();//【ndk print】int[]
+        mNativeRawMgr.doTest04();//【ndk print】String[]
+        mNativeRawMgr.doTest05();//【ndk print】Object - Cpu
+        mNativeRawMgr.doTest06();//【ndk print】static method
+        mNativeRawMgr.doTest07();//【ndk print】Object - Field
     }
 }

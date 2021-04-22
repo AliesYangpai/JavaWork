@@ -1,5 +1,7 @@
 package com.alie.modulepracticendk;
 
+import com.alie.modulepracticendk.bean.Cpu;
+
 public class NativeRawMgr {
 
     private static final String TAG = "NativeRawMgr";
@@ -18,7 +20,7 @@ public class NativeRawMgr {
     }
 
     void showLog(String text) {
-        System.out.println("===" + TAG + " " + text);
+        System.out.println(TAG + "===" + text);
     }
 
     void doHelloWorld() {
@@ -38,7 +40,7 @@ public class NativeRawMgr {
 
     void doTest03() {
         showLog("doTest03");
-        int[] array = {5,66,777,888,999};
+        int[] array = {5, 66, 777, 888, 999};
         mNativeRaw.printData(array);
     }
 
@@ -49,6 +51,20 @@ public class NativeRawMgr {
     }
 
     void doTest05() {
+        showLog("doTest05");
+        mNativeRaw.printData(new Cpu("Alienware", 999F));
+    }
+
+    void doTest06() {
+        showLog("doTest06");
+        mNativeRaw.printDataObjStaticMethod(new Cpu("Alienware", 999F));
+    }
+
+    void doTest07() {
+        showLog("doTest07");
+        Cpu cpu = new Cpu("Alienware", 888F);
+        mNativeRaw.printDataObjField(cpu);
+        showLog("doTest07" + " " + cpu.getPrice());
     }
 }
 
