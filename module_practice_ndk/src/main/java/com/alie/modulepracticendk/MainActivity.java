@@ -14,19 +14,21 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
+    private NativeRawMgr mNativeRawMgr = NativeRawMgr.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        init();
+        initData();
     }
 
 
-    void init() {
-        HolderJni holderJni = new HolderJni();
-//        holderJni.doFirstIn();//【ndk 打印】hello world
-//        holderJni.doTest01(); //【ndk 打印】打印int String Int[]
-//        holderJni.doTest02(); //【ndk 打印】打印String[]
-        holderJni.doTest03(); //【ndk 打印】打印Student
+    void initData() {
+        mNativeRawMgr.doHelloWorld();
+        mNativeRawMgr.doTest01();// 【ndk print】int
+        mNativeRawMgr.doTest02();// 【ndk print】String
+        mNativeRawMgr.doTest03();// 【ndk print】int[]
+        mNativeRawMgr.doTest04();// 【ndk print】String[]
     }
 }

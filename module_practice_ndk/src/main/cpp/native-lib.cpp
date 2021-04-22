@@ -4,93 +4,55 @@
 
 extern "C"
 JNIEXPORT jstring JNICALL
-Java_com_alie_modulepracticendk_HolderJni_stringFromJNI(JNIEnv *env, jobject thiz) {
-    std::string hello = "Hello from C++";
-    return env->NewStringUTF(hello.c_str());
+Java_com_alie_modulepracticendk_NativeRaw_doHelloWorld(JNIEnv *env, jobject thiz) {
+    return env->NewStringUTF("Hello ndk");
 }
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_alie_modulepracticendk_HolderJni_do_1test_101_1print_1data(JNIEnv *env,
-                                                                    jobject thiz,
-                                                                    jshort age, jstring name,
-                                                                    jintArray array) {
-    __android_log_print(ANDROID_LOG_DEBUG, "XXX", "===jniData native age:%d", age);
-    /**
-     * isCopy
-     * 1:copy to a new data in memory ,the pointer change to a new one
-     * 0:not create value just using the data that point to java (from java)
-     */
-    const char *p_name = env->GetStringUTFChars(name, NULL);
-    __android_log_print(ANDROID_LOG_DEBUG, "XXX", "===jniData native name:%s", p_name);
+Java_com_alie_modulepracticendk_NativeRaw_printData__I(JNIEnv *env, jobject thiz, jint age) {
+    __android_log_print(ANDROID_LOG_DEBUG, "native-lib.cpp", "===jniData native name:%d", age);
+}
 
-    jint *p_array = env->GetIntArrayElements(array, NULL);
-    jsize length = env->GetArrayLength(array);
-    for (int i = 0; i < length; i++) {
-        __android_log_print(ANDROID_LOG_DEBUG, "XXX", "===jniData native array[%d] = %d", i,
-                            *(p_array + i));
-    }
-
-    /**
-     * ============================Release================================
-     * When you env->GetXXXXX() you also have to env-> Releasexxxxx() if needed
-     */
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_alie_modulepracticendk_NativeRaw_printData__Ljava_lang_String_2(JNIEnv *env, jobject thiz,
+                                                                         jstring name) {
+    const char *p_name = env->GetStringUTFChars(name, 0);
+    __android_log_print(ANDROID_LOG_DEBUG, "native-lib.cpp", "===jniData native name:%s", p_name);
     env->ReleaseStringUTFChars(name, p_name);
+}
 
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_alie_modulepracticendk_NativeRaw_printData___3I(JNIEnv *env, jobject thiz,
+                                                         jintArray int_array) {
+    jint *p_array = env->GetIntArrayElements(int_array, 0);
+    jsize length = env->GetArrayLength(int_array);
+    for (jint i = 0; i < length; ++i) {
+        __android_log_print(ANDROID_LOG_DEBUG, "native-lib.cpp",
+                            "===jniData native int_array[%d] = %d", i, *(p_array + i));
+    }
     /**
      * 参数3：MODE
      * 0:刷新java数组 并释放C/C++数组
      * 1:JNI_COMMIT -> 只刷新java数组，不释放
      * 2:JNI_ABORT -> java c++ 全部释放
      */
-    env->ReleaseIntArrayElements(array, p_array, 0);
+    env->ReleaseIntArrayElements(int_array, p_array, 0);
 }
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_alie_modulepracticendk_HolderJni_do_1test_102_1print_1data(JNIEnv *env, jobject thiz,
-                                                                    jobjectArray array) {
-    jsize size = env->GetArrayLength(array);
-    for (int i = 0; i < size; i++) {
-        jstring str = static_cast<jstring>(env->GetObjectArrayElement(array, i));
-        const char *p_value = env->GetStringUTFChars(str, NULL);
-        __android_log_print(ANDROID_LOG_DEBUG, "XXX", "===jniData native array[%d] = %s", i,
+Java_com_alie_modulepracticendk_NativeRaw_printData___3Ljava_lang_String_2(JNIEnv *env,
+                                                                           jobject thiz,
+                                                                           jobjectArray string_array) {
+    jsize length = env->GetArrayLength(string_array);
+    for (jint i = 0; i < length; ++i) {
+        jstring value = static_cast<jstring>(env->GetObjectArrayElement(string_array, i));
+        const char *p_value = env->GetStringUTFChars(value, 0);
+        __android_log_print(ANDROID_LOG_DEBUG, "native-lib.cpp", "===jniData native name:%s",
                             p_value);
-        env->ReleaseStringUTFChars(str, p_value);
+        env->ReleaseStringUTFChars(value,p_value);
     }
-}
-
-extern "C"
-JNIEXPORT void JNICALL
-Java_com_alie_modulepracticendk_HolderJni_do_1test_103_1print_1data(JNIEnv *env, jobject thiz,
-                                                                    jstring content,
-                                                                    jobject student) {
-    const char *p_content = env->GetStringUTFChars(content, 0);
-    __android_log_print(ANDROID_LOG_DEBUG, "xxx", "===jniData native content = %s", p_content);
-    env->ReleaseStringUTFChars(content, p_content);
-    /**
-     * 类似于java中的反射调用
-     */
-    // 1.获取class
-    jclass stuClz = env->GetObjectClass(student);
-    // 2.通过class 获取方法 (class,方法名，签名)
-    jmethodID getAge = env->GetMethodID(stuClz, "getAge", "()S");
-    jmethodID getName = env->GetMethodID(stuClz, "getName", "()Ljava/lang/String;");
-    jmethodID setAge = env->GetMethodID(stuClz, "setAge", "(S)V");
-    jmethodID setName = env->GetMethodID(stuClz, "setName", "(Ljava/lang/String;)V");
-    // 3.使用env->CallShortMethod 调用方法
-    jshort age = env->CallShortMethod(student, getAge);
-    jstring jstringName = static_cast<jstring>(env->CallObjectMethod(student, getName));
-    const char *p_value = env->GetStringUTFChars(jstringName, 0);
-    __android_log_print(ANDROID_LOG_DEBUG, "xxx",
-                        "===jniData native student.age = %d student.name = %s", age, p_value);
-    env->ReleaseStringUTFChars(jstringName, p_value);
-
-    //=======set方法
-    env->CallVoidMethod(student,setAge,32);
-    jstring nameParam = env->NewStringUTF("大西瓜");
-    env->CallVoidMethod(student,setName,nameParam); // 此处不能传入String
-    //释放掉局部引用：
-    env->DeleteLocalRef(nameParam);
-
 }
