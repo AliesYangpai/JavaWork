@@ -93,10 +93,22 @@ JNIEXPORT void JNICALL
 Java_com_alie_modulepracticendk_NativeRaw_printDataObjField__Lcom_alie_modulepracticendk_bean_Cpu_2(
         JNIEnv *env, jobject thiz, jobject cpu) {
     jclass clazzCpu = env->GetObjectClass(cpu);
-    jfieldID priceField = env->GetFieldID(clazzCpu, "price", "F");
-    jfloat price = env->GetFloatField(cpu, priceField);
+
+    /**
+     * 获取 price：float 属性并修改
+     */
+    jfieldID priceFieldId = env->GetFieldID(clazzCpu, "price", "F");
+    jfloat price = env->GetFloatField(cpu, priceFieldId);
     __android_log_print(ANDROID_LOG_DEBUG, "native-lib.cpp", "===jniData native field price:%f",
                         price);
     jfloat value = 87.8F;
-    env->SetFloatField(cpu, priceField, value);
+    env->SetFloatField(cpu, priceFieldId, value);
+
+    /**
+     * 获取name:String 属性并修改
+     */
+    jfieldID nameFieldId = env->GetFieldID(clazzCpu, "name", "Ljava/lang/String;");
+    jstring  newName = env->NewStringUTF("联想电脑");
+    env->SetObjectField(cpu,nameFieldId,newName);
+    env->DeleteLocalRef(newName); // 释放局部变量
 }
