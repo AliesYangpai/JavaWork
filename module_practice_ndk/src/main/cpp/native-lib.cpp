@@ -97,7 +97,7 @@ Java_com_alie_modulepracticendk_NativeRaw_printDataObjField__Lcom_alie_modulepra
     /**
      * 获取 price：float 属性并修改
      */
-    jfieldID priceFieldId = env->GetFieldID(clazzCpu, "price", "F");
+    jfieldID priceFieldId = env->GetFieldID(clazzCpu, "mPrice", "F");
     jfloat price = env->GetFloatField(cpu, priceFieldId);
     __android_log_print(ANDROID_LOG_DEBUG, "native-lib.cpp", "===jniData native field price:%f",
                         price);
@@ -107,8 +107,29 @@ Java_com_alie_modulepracticendk_NativeRaw_printDataObjField__Lcom_alie_modulepra
     /**
      * 获取name:String 属性并修改
      */
-    jfieldID nameFieldId = env->GetFieldID(clazzCpu, "name", "Ljava/lang/String;");
-    jstring  newName = env->NewStringUTF("联想电脑");
-    env->SetObjectField(cpu,nameFieldId,newName);
+    jfieldID nameFieldId = env->GetFieldID(clazzCpu, "mName", "Ljava/lang/String;");
+    jstring newName = env->NewStringUTF("联想电脑");
+    env->SetObjectField(cpu, nameFieldId, newName);
     env->DeleteLocalRef(newName); // 释放局部变量
+}
+
+extern "C"
+JNIEXPORT jobject JNICALL
+Java_com_alie_modulepracticendk_NativeRaw_generateCpu(JNIEnv *env, jobject thiz, jstring name,
+                                                      jfloat price) {
+
+    /**
+     * 1.获取类：FindClass
+     * 2.获取构造方法 （）【备注】构造方法的方法名 永远都是<init>
+     * 3.调用构造方法 NewObject
+     */
+    const char* p_class_cpu = "com/alie/modulepracticendk/bean/Cpu";
+    jclass clazzCpu = env->FindClass(p_class_cpu);
+    // 有参构造
+    jmethodID  constructMethodId = env->GetMethodID(clazzCpu,"<init>", "(Ljava/lang/String;F)V");
+
+    const char * p_name = "小米";
+    jstring targetName = env->NewStringUTF(p_name);
+    jfloat  targetPrice = 150.5F;
+    return env->NewObject(clazzCpu,constructMethodId,targetName,targetPrice);
 }

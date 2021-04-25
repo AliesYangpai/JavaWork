@@ -20,4 +20,5 @@ public class NativeRaw {
     protected native void printData(Cpu cpu);
     protected native void printDataObjStaticMethod(Cpu cpu);
     protected native void printDataObjField(Cpu cpu);
+    protected native Cpu generateCpu(String name,float price);
 }

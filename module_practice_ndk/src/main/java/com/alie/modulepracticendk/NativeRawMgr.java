@@ -64,7 +64,15 @@ public class NativeRawMgr {
         showLog("doTest07");
         Cpu cpu = new Cpu("Alienware", 888F);
         mNativeRaw.printDataObjField(cpu);
-        showLog("doTest07" + " price:" + cpu.getPrice()+" name:"+cpu.getName());
+        showLog("doTest07" + " price:" + cpu.getPrice() + " name:" + cpu.getName());
+    }
+
+    void doTest08() {
+        showLog("doTest08");
+        Cpu cpu = mNativeRaw.generateCpu("明基", 456F);
+        if (cpu != null) {
+            showLog(" generateCpu: name:"+cpu.getName()+" price:"+cpu.getPrice());
+        }
     }
 }
 
