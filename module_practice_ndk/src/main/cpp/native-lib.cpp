@@ -123,13 +123,46 @@ Java_com_alie_modulepracticendk_NativeRaw_generateCpu(JNIEnv *env, jobject thiz,
      * 2.获取构造方法 （）【备注】构造方法的方法名 永远都是<init>
      * 3.调用构造方法 NewObject
      */
-    const char* p_class_cpu = "com/alie/modulepracticendk/bean/Cpu";
+    const char *p_class_cpu = "com/alie/modulepracticendk/bean/Cpu";
     jclass clazzCpu = env->FindClass(p_class_cpu);
     // 有参构造
-    jmethodID  constructMethodId = env->GetMethodID(clazzCpu,"<init>", "(Ljava/lang/String;F)V");
+    jmethodID constructMethodId = env->GetMethodID(clazzCpu, "<init>", "(Ljava/lang/String;F)V");
 
-    const char * p_name = "小米";
+    const char *p_name = "小米";
     jstring targetName = env->NewStringUTF(p_name);
-    jfloat  targetPrice = 150.5F;
-    return env->NewObject(clazzCpu,constructMethodId,targetName,targetPrice);
+    jfloat targetPrice = 150.5F;
+    return env->NewObject(clazzCpu, constructMethodId, targetName, targetPrice);
+}
+
+extern "C"
+JNIEXPORT jobject JNICALL
+Java_com_alie_modulepracticendk_NativeRaw_generateGpu(JNIEnv *env, jobject thiz, jstring name,
+                                                      jfloat price) {
+    const char *p_package_gpu = "com/alie/modulepracticendk/bean/Gpu";
+    jclass clazzGpu = env->FindClass(p_package_gpu);
+    jmethodID constructCpu = env->GetMethodID(clazzGpu, "<init>", "(Ljava/lang/String;F)V");
+    return env->NewObject(clazzGpu, constructCpu, name, price);
+
+}
+
+extern "C"
+JNIEXPORT jobject JNICALL
+Java_com_alie_modulepracticendk_NativeRaw_generateMemory(JNIEnv *env, jobject thiz, jstring name,
+                                                         jfloat price) {
+    const char *p_package_memory = "com/alie/modulepracticendk/bean/Memory";
+    jclass clazzMemory = env->FindClass(p_package_memory);
+    jmethodID constructMemory = env->GetMethodID(clazzMemory, "<init>", "(Ljava/lang/String;F)V");
+    return env->NewObject(clazzMemory, constructMemory, name, price);
+}
+
+extern "C"
+JNIEXPORT jobject JNICALL
+Java_com_alie_modulepracticendk_NativeRaw_generateComputer(JNIEnv *env, jobject thiz, jstring name,
+                                                           jobject cpu, jobject gpu,
+                                                           jobject memory) {
+    const char *p_package_computer = "com/alie/modulepracticendk/bean/Computer";
+    jclass clazzComputer = env->FindClass(p_package_computer);
+    jmethodID constructComputer = env->GetMethodID(clazzComputer, "<init>",
+                                                   "(Ljava/lang/String;Lcom/alie/modulepracticendk/bean/Cpu;Lcom/alie/modulepracticendk/bean/Gpu;Lcom/alie/modulepracticendk/bean/Memory;)V");
+   return env->NewObject(clazzComputer,constructComputer,name,cpu,gpu,memory);
 }

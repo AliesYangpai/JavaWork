@@ -1,6 +1,9 @@
 package com.alie.modulepracticendk;
 
+import com.alie.modulepracticendk.bean.Computer;
 import com.alie.modulepracticendk.bean.Cpu;
+import com.alie.modulepracticendk.bean.Gpu;
+import com.alie.modulepracticendk.bean.Memory;
 
 public class NativeRawMgr {
 
@@ -71,8 +74,20 @@ public class NativeRawMgr {
         showLog("doTest08");
         Cpu cpu = mNativeRaw.generateCpu("明基", 456F);
         if (cpu != null) {
-            showLog(" generateCpu: name:"+cpu.getName()+" price:"+cpu.getPrice());
+            showLog(" generateCpu: name:" + cpu.getName() + " price:" + cpu.getPrice());
         }
+    }
+
+    void doTest09() {
+        showLog("doTest09");
+        Cpu cpu = mNativeRaw.generateCpu("Dell", 111F);
+        Gpu gpu = mNativeRaw.generateGpu("lenovo", 222F);
+        Memory memory = mNativeRaw.generateMemory("Alienware", 999F);
+        Computer computer = mNativeRaw.generateComputer("Alie_Computer", cpu, gpu, memory);
+        showLog(computer.getName() + " "
+                + computer.getCpu().getName() + " "
+                + computer.getGpu().getName() + " "
+                + computer.getMemory().getName());
     }
 }
 
