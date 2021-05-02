@@ -1,7 +1,53 @@
 #include <jni.h>
 #include <string>
 #include <android/log.h>
+#include <pthread.h>
+
 #define PRINT_LOG(...) __android_log_print(ANDROID_LOG_DEBUG,"native-lib.cpp",__VA_ARGS__)
+
+/**
+ * ==============================线程相关测试开始==============================
+ */
+
+
+struct ThreadParam1 {
+    const char* p_param1;
+    const char* p_param2;
+};
+
+void *thread_method01(void *args) {
+    PRINT_LOG("===thread_method01");
+    ThreadParam1 *param = static_cast<ThreadParam1 *>(args);
+    PRINT_LOG("param1:%s,param:%s",param->p_param1,param->p_param2);
+    free(param);
+    param = NULL;
+    return 0;
+}
+
+
+/**
+ *  part1 创建线程并执行 (前两个是线程属性，后两个属于方法属性)
+     pthread_create()
+	 一共4个参数
+	 param1:线程对象的指针
+	 param2:线程属性设置:在c或者c++中就代表的是null
+	 param3:函数指针-> 这个就是我们想要在线程中运行的函数
+	 param4:函数中的参数
+     pthread_create(&pid,NULL, my_task_in_pthread,&arg);
+ */
+
+void thread_common_test01(const char* p_1,const char* p_2) {
+    PRINT_LOG("===thread_common_test01");
+    pthread_t pid;
+    ThreadParam1 *param = static_cast<ThreadParam1 *>(malloc(sizeof(ThreadParam1)));
+    param->p_param1 = p_1;
+    param->p_param2 = p_2;
+    pthread_create(&pid, 0, thread_method01, param);
+}
+
+/**
+ * ==============================线程相关测试结束==============================
+ */
 extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_alie_modulepracticendk_NativeRaw_doHelloWorld(JNIEnv *env, jobject thiz) {
@@ -178,7 +224,7 @@ Java_com_alie_modulepracticendk_NativeRaw_printDataThreadWork(JNIEnv *env, jobje
     jmethodID getNameMethodId = env->GetMethodID(clzCpu, "getName", "()Ljava/lang/String;");
     jstring cpuName = static_cast<jstring>(env->CallObjectMethod(cpuObj, getNameMethodId));
 
-    const char* p_computer_name = env->GetStringUTFChars(computerName,0);
-    const char* p_cpu_name = env->GetStringUTFChars(cpuName,0);
-    PRINT_LOG("computer name : %s,cpu's name:%s",p_computer_name,p_cpu_name);
+    const char *p_computer_name = env->GetStringUTFChars(computerName, 0);
+    const char *p_cpu_name = env->GetStringUTFChars(cpuName, 0);
+    thread_common_test01(p_computer_name, p_cpu_name);
 }
