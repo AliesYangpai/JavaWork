@@ -1,7 +1,7 @@
 #include <jni.h>
 #include <string>
 #include <android/log.h>
-
+#define PRINT_LOG(...) __android_log_print(ANDROID_LOG_DEBUG,"native-lib.cpp",__VA_ARGS__)
 extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_alie_modulepracticendk_NativeRaw_doHelloWorld(JNIEnv *env, jobject thiz) {
@@ -127,11 +127,7 @@ Java_com_alie_modulepracticendk_NativeRaw_generateCpu(JNIEnv *env, jobject thiz,
     jclass clazzCpu = env->FindClass(p_class_cpu);
     // 有参构造
     jmethodID constructMethodId = env->GetMethodID(clazzCpu, "<init>", "(Ljava/lang/String;F)V");
-
-    const char *p_name = "小米";
-    jstring targetName = env->NewStringUTF(p_name);
-    jfloat targetPrice = 150.5F;
-    return env->NewObject(clazzCpu, constructMethodId, targetName, targetPrice);
+    return env->NewObject(clazzCpu, constructMethodId, name, price);
 }
 
 extern "C"
@@ -164,5 +160,25 @@ Java_com_alie_modulepracticendk_NativeRaw_generateComputer(JNIEnv *env, jobject 
     jclass clazzComputer = env->FindClass(p_package_computer);
     jmethodID constructComputer = env->GetMethodID(clazzComputer, "<init>",
                                                    "(Ljava/lang/String;Lcom/alie/modulepracticendk/bean/Cpu;Lcom/alie/modulepracticendk/bean/Gpu;Lcom/alie/modulepracticendk/bean/Memory;)V");
-   return env->NewObject(clazzComputer,constructComputer,name,cpu,gpu,memory);
+    return env->NewObject(clazzComputer, constructComputer, name, cpu, gpu, memory);
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_alie_modulepracticendk_NativeRaw_printDataThreadWork(JNIEnv *env, jobject thiz,
+                                                              jobject computer) {
+    jclass clzComputer = env->GetObjectClass(computer);
+    jmethodID getComputerCpuMethodId = env->GetMethodID(clzComputer, "getCpu",
+                                                        "()Lcom/alie/modulepracticendk/bean/Cpu;");
+    jmethodID getComputerName = env->GetMethodID(clzComputer, "getName", "()Ljava/lang/String;");
+    jstring computerName = static_cast<jstring>(env->CallObjectMethod(computer, getComputerName));
+
+    jobject cpuObj = env->CallObjectMethod(computer, getComputerCpuMethodId);
+    jclass clzCpu = env->GetObjectClass(cpuObj);
+    jmethodID getNameMethodId = env->GetMethodID(clzCpu, "getName", "()Ljava/lang/String;");
+    jstring cpuName = static_cast<jstring>(env->CallObjectMethod(cpuObj, getNameMethodId));
+
+    const char* p_computer_name = env->GetStringUTFChars(computerName,0);
+    const char* p_cpu_name = env->GetStringUTFChars(cpuName,0);
+    PRINT_LOG("computer name : %s,cpu's name:%s",p_computer_name,p_cpu_name);
 }

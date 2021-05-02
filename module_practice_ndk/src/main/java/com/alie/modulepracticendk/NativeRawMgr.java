@@ -89,5 +89,14 @@ public class NativeRawMgr {
                 + computer.getGpu().getName() + " "
                 + computer.getMemory().getName());
     }
+
+    void doTest10() {
+        showLog("doTest10");
+        Cpu cpu = mNativeRaw.generateCpu("Dell", 111F);
+        Gpu gpu = mNativeRaw.generateGpu("lenovo", 222F);
+        Memory memory = mNativeRaw.generateMemory("Alienware", 999F);
+        Computer computer = mNativeRaw.generateComputer("Alie_Computer", cpu, gpu, memory);
+        mNativeRaw.printDataThreadWork(computer);
+    }
 }
 

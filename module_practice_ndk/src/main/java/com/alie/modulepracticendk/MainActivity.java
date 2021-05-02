@@ -35,5 +35,6 @@ public class MainActivity extends AppCompatActivity {
         mNativeRawMgr.doTest07();//【ndk print】Object - Field
         mNativeRawMgr.doTest08();//【ndk create】Object - generate Cpu in ndk
         mNativeRawMgr.doTest09();//【ndk create】Object - generate Computer in ndk
+        mNativeRawMgr.doTest10();//【ndk print】thread work
     }
 }
