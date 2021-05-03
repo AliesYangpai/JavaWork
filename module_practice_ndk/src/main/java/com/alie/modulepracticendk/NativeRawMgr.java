@@ -98,5 +98,14 @@ public class NativeRawMgr {
         Computer computer = mNativeRaw.generateComputer("Alie_Computer", cpu, gpu, memory);
         mNativeRaw.printDataThreadWork(computer);
     }
+
+    void doTest11() {
+        showLog("doTest11");
+        Cpu cpu = mNativeRaw.generateCpu("Dell", 111F);
+        Gpu gpu = mNativeRaw.generateGpu("lenovo", 222F);
+        Memory memory = mNativeRaw.generateMemory("Alienware", 999F);
+        Computer computer = mNativeRaw.generateComputer("Alie_Computer", cpu, gpu, memory);
+        mNativeRaw.printDataThreadWorkVm(computer);
+    }
 }
 

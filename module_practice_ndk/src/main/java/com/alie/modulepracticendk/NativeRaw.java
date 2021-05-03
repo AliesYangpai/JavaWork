@@ -28,4 +28,5 @@ public class NativeRaw {
     protected native Memory generateMemory(String name,float price);
     protected native Computer generateComputer(String name,Cpu cpu,Gpu gpu,Memory memory);
     protected native void printDataThreadWork(Computer computer);
+    protected native void printDataThreadWorkVm(Computer computer);
 }

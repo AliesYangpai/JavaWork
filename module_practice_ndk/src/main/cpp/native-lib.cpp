@@ -11,16 +11,33 @@
 
 
 struct ThreadParam1 {
-    const char* p_param1;
-    const char* p_param2;
+    const char *p_param1;
+    const char *p_param2;
 };
+
+
+JavaVM *mVm;
+
+/**
+ * 调用时机：
+ *         java中调用System.loadLibrary()函数时，
+ *         在jni内部就会先去查找so中的JNI_OnLoad 函数并执行调用
+ * 用处:
+ *     jni初始化的一些操作，别入vm指针保存（可用于后面，pthread其他线程中使用vm）
+ * @param vm 代表jvm虚拟机，指针（看，有了虚拟机，那么我们基本上java的一些都系都可以干了）
+ * @param reserved 我也不知道这是个干啥的~
+ * @return 当前jni的版本
+ */
+jint JNI_OnLoad(JavaVM *vm, void *reserved) {
+    mVm = vm;
+    return JNI_VERSION_1_6; // 这里使用2、4、6
+}
 
 void *thread_method01(void *args) {
     PRINT_LOG("===thread_method01");
     ThreadParam1 *param = static_cast<ThreadParam1 *>(args);
-    PRINT_LOG("param1:%s,param:%s",param->p_param1,param->p_param2);
-    free(param);
-    param = NULL;
+    PRINT_LOG("param1:%s,param:%s", param->p_param1, param->p_param2);
+    free(param);param = NULL;
     return 0;
 }
 
@@ -35,14 +52,66 @@ void *thread_method01(void *args) {
 	 param4:函数中的参数
      pthread_create(&pid,NULL, my_task_in_pthread,&arg);
  */
-
-void thread_common_test01(const char* p_1,const char* p_2) {
+void thread_common_test01(const char *p_1, const char *p_2) {
     PRINT_LOG("===thread_common_test01");
     pthread_t pid;
     ThreadParam1 *param = static_cast<ThreadParam1 *>(malloc(sizeof(ThreadParam1)));
     param->p_param1 = p_1;
     param->p_param2 = p_2;
     pthread_create(&pid, 0, thread_method01, param);
+}
+
+struct ThreadParam2 {
+    jobject param_target;
+};
+
+/**
+ * 2号线程方法啊
+ * @param args
+ * @return
+ */
+void *thread_method02(void *args) {
+
+    PRINT_LOG("thread_method02");
+    ThreadParam2 *param = static_cast<ThreadParam2 *>(args);
+    /**
+     * 从jvm中获取在当前线程中env的指针（很重要~，mVm的获取我们可以在ON_JNI_LOAD的时候获取）
+     * 从jvm中构建一个属于当前线程的jni环境（env）啦
+     */
+    JNIEnv *env;
+    jint attach_ret = mVm->AttachCurrentThread(&env, 0);
+    PRINT_LOG("attach_ret:%d", attach_ret);
+    if (attach_ret) {
+        // 数据获取(电脑名称)
+        jobject computer = param->param_target;
+        jclass clzComputer = env->GetObjectClass(computer);
+        jmethodID getComputerName = env->GetMethodID(clzComputer, "getName", "()Ljava/lang/String;");
+        jstring computerName = static_cast<jstring>(env->CallObjectMethod(computer, getComputerName));
+
+        // 数据获取（cpu名称）
+        jmethodID getComputerCpuMethodId = env->GetMethodID(clzComputer, "getCpu","()Lcom/alie/modulepracticendk/bean/Cpu;");
+        jobject cpuObj = env->CallObjectMethod(computer, getComputerCpuMethodId);
+        jclass clzCpu = env->GetObjectClass(cpuObj);
+        jmethodID getNameMethodId = env->GetMethodID(clzCpu, "getName", "()Ljava/lang/String;");
+        jstring cpuName = static_cast<jstring>(env->CallObjectMethod(cpuObj, getNameMethodId));
+        const char *p_computer_name = env->GetStringUTFChars(computerName, 0);
+        const char *p_cpu_name = env->GetStringUTFChars(cpuName, 0);
+        PRINT_LOG("computerName:%s,cpuName:%s", p_computer_name, p_cpu_name);
+    }
+    jint detach_ret = mVm->DetachCurrentThread();
+    PRINT_LOG("detach_ret:%d", detach_ret);
+    delete param; param = NULL;
+    return 0;
+}
+
+/**
+ * 创建线程并执行任务,这里我们在线程中完成对数据的转化，env相关方法
+ */
+void thread_common_test02(jobject computer) {
+    pthread_t pid;
+    ThreadParam2 *threadParam2 = new ThreadParam2();
+    threadParam2->param_target = computer;
+    pthread_create(&pid, 0, thread_method02, threadParam2);
 }
 
 /**
@@ -227,4 +296,11 @@ Java_com_alie_modulepracticendk_NativeRaw_printDataThreadWork(JNIEnv *env, jobje
     const char *p_computer_name = env->GetStringUTFChars(computerName, 0);
     const char *p_cpu_name = env->GetStringUTFChars(cpuName, 0);
     thread_common_test01(p_computer_name, p_cpu_name);
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_alie_modulepracticendk_NativeRaw_printDataThreadWorkVm(JNIEnv *env, jobject thiz,
+                                                                jobject computer) {
+    thread_common_test02(computer);
 }
