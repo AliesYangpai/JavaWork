@@ -1,3 +1,4 @@
+include ':module_practice_polymorphism'
 include ':module_practice_ndk'
 include ':module_practice_jni'
 include ':module_practice_memory_leak'

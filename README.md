@@ -12,3 +12,4 @@ This project is a java practice collection
 > * [module_practice_memory_leak] module sample to show how to produce memory leak error
 > * [module_practice_jni] module sample to show jni 
 > * [module_practice_ndk] module sample to show ndk
+> * [module_practice_polymorphism] module sample to show polymorphism for java and associate with c++
