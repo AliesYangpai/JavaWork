@@ -1,4 +1,4 @@
-package com.alie.modulepracticepolymorphism.bean;
+package com.alie.modulepracticepolymorphism.bean.java;
 
 public class Animal {
     private String mName;
@@ -21,4 +21,5 @@ public class Animal {
     public void eat() {
         System.out.println("===Animal eat");
     }
+
 }

@@ -1,4 +1,4 @@
-package com.alie.modulepracticepolymorphism.bean;
+package com.alie.modulepracticepolymorphism.bean.java;
 
 public class Dog extends Animal {
     public Dog() {

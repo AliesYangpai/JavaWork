@@ -2,10 +2,13 @@ package com.alie.modulepracticepolymorphism;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
-import com.alie.modulepracticepolymorphism.bean.Animal;
-import com.alie.modulepracticepolymorphism.bean.Dog;
+import com.alie.modulepracticepolymorphism.bean.java.Animal;
+import com.alie.modulepracticepolymorphism.bean.java.BaseAnimal;
+import com.alie.modulepracticepolymorphism.bean.java.Caw;
+import com.alie.modulepracticepolymorphism.bean.java.Dog;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,10 +21,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         startMethod();
+        initView();
+    }
+
+    void initView (){
+        findViewById(R.id.btn1).setOnClickListener(v->{
+            startActivity(new Intent(this,SecondActivity.class));
+        });
     }
 
     void executeFun01(Animal animal) {
         animal.eat();
+    }
+
+    void executeFun02(BaseAnimal baseAnimal) {
+        baseAnimal.showCommonInfo();
+        baseAnimal.showAnimalInfo();
     }
 
     /**
@@ -42,6 +57,15 @@ public class MainActivity extends AppCompatActivity {
         executeFun01(animal);
     }
 
+    /**
+     * test polymorphism for LSP in abstract method
+     */
+    void doTest03() {
+        printInfo("===doTest03");
+        BaseAnimal baseAnimal = new Caw();
+        executeFun02(baseAnimal);
+    }
+
     void startMethod() {
         //=============start==============
         doTest01();//【polymorphism】param is parent only
@@ -54,5 +78,6 @@ public class MainActivity extends AppCompatActivity {
          *   from parent and we can still operate child method but not c++
          */
         //=============end==============
+        doTest03();//【polymorphism】polymorphism for LSP in abstract method
     }
 }
