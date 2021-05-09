@@ -1,3 +1,4 @@
+include ':module_practice_common'
 include ':module_practice_polymorphism'
 include ':module_practice_ndk'
 include ':module_practice_jni'
