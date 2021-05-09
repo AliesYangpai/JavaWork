@@ -4,6 +4,10 @@ import com.alie.modulepracticendk.bean.Computer;
 import com.alie.modulepracticendk.bean.Cpu;
 import com.alie.modulepracticendk.bean.Gpu;
 import com.alie.modulepracticendk.bean.Memory;
+import com.alie.modulepracticendk.bean.car.CarEngine;
+import com.alie.modulepracticendk.bean.car.CarFrame;
+import com.alie.modulepracticendk.bean.car.CarWheel;
+import com.alie.modulepracticendk.bean.car.Vehicle;
 
 public class NativeRawMgr {
 
@@ -90,8 +94,8 @@ public class NativeRawMgr {
                 + computer.getMemory().getName());
     }
 
-    void doTest10() {
-        showLog("doTest10");
+    void doTest10Thread() {
+        showLog("doTest10Thread");
         Cpu cpu = mNativeRaw.generateCpu("Dell", 111F);
         Gpu gpu = mNativeRaw.generateGpu("lenovo", 222F);
         Memory memory = mNativeRaw.generateMemory("Alienware", 999F);
@@ -99,13 +103,25 @@ public class NativeRawMgr {
         mNativeRaw.printDataThreadWork(computer);
     }
 
-    void doTest11() {
-        showLog("doTest11");
+    void doTest11Thread() {
+        showLog("doTest11Thread");
         Cpu cpu = mNativeRaw.generateCpu("Dell", 111F);
         Gpu gpu = mNativeRaw.generateGpu("lenovo", 222F);
         Memory memory = mNativeRaw.generateMemory("Alienware", 999F);
         Computer computer = mNativeRaw.generateComputer("Alie_Computer", cpu, gpu, memory);
         mNativeRaw.printDataThreadWorkVm(computer);
+    }
+
+    void doTest12() {
+        showLog("doTest12");
+        CarEngine carEngine = mNativeRaw.generateCarEngine("V8");
+        CarFrame carFrame = mNativeRaw.generateCarFrame("Ferrari Rafa -001");
+        CarWheel carWheel = mNativeRaw.generateCarWheel("Bridgestone");
+        Vehicle vehicle = mNativeRaw.generateVehicle("Ferrari Rafa", carEngine, carFrame, carWheel);
+        showLog(vehicle.getVehicleName() + " "
+                + vehicle.getCarEngine().getEngineName() + " "
+                + vehicle.getCarFrame().getFrameName() + " "
+                + vehicle.getCaWheel().getWheelName());
     }
 }
 
