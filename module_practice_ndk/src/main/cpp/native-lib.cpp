@@ -10,12 +10,6 @@
  */
 
 
-struct ThreadParam1 {
-    const char *p_param1;
-    const char *p_param2;
-};
-
-
 JavaVM *mVm;
 
 /**
@@ -33,6 +27,11 @@ jint JNI_OnLoad(JavaVM *vm, void *reserved) {
     return JNI_VERSION_1_6; // 这里使用2、4、6
 }
 
+struct ThreadParam1 {
+    const char *p_param1;
+    const char *p_param2;
+};
+
 void *thread_method01(void *args) {
     PRINT_LOG("===thread_method01");
     ThreadParam1 *param = static_cast<ThreadParam1 *>(args);
@@ -41,7 +40,6 @@ void *thread_method01(void *args) {
     param = NULL;
     return 0;
 }
-
 
 /**
  *  part1 创建线程并执行 (前两个是线程属性，后两个属于方法属性)
