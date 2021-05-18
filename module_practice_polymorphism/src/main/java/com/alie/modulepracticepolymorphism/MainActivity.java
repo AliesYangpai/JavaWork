@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
          * 1.java is same to c++ in method pointer address early binding when passing param is LSP
          *   and also late bind
          * 2.java is more flexible in method pointer address early binding,it will invoke same method
-         *   from parent and we can still operate child method but not c++
+         *   from parent and we can still operate child method but not c++ 【this is different】
          */
         //=============end==============
         doTest03();//【polymorphism】polymorphism for LSP in abstract method
