@@ -39,5 +39,6 @@ public class MainActivity extends AppCompatActivity {
 //        mNativeRawMgr.doTest11Thread();//【ndk print】thread work malloc the param and child attach vm
         mNativeRawMgr.doTest12();//【ndk create】Object - generate vehicle in ndk
         mNativeRawMgr.doTest13();//【ndk create】Object - generate vehicle in ndk
+        mNativeRawMgr.doTest14Thread();//【ndk print】thread work malloc the param
     }
 }

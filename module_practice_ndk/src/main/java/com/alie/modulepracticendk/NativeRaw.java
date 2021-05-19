@@ -39,4 +39,5 @@ public class NativeRaw {
     protected native CarWheel generateCarWheel(String name);
     protected native Vehicle generateVehicle(String name,CarEngine carEngine,CarFrame carFrame,CarWheel carWheel);
     protected native Vehicle generateVehicle(String name);
+    protected native void printDataThread0519(String name);
 }

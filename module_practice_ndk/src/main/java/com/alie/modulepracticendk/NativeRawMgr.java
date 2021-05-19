@@ -132,5 +132,10 @@ public class NativeRawMgr {
                 + vehicle.getCarFrame().getFrameName() + " "
                 + vehicle.getCaWheel().getWheelName());
     }
+
+    void doTest14Thread() {
+        showLog("doTest14Thread");
+        mNativeRaw.printDataThread0519("Benz");
+    }
 }
 

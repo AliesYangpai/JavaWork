@@ -80,7 +80,7 @@ void *thread_method02(void *args) {
     JNIEnv *env;
     jint attach_ret = mVm->AttachCurrentThread(&env, 0);
     PRINT_LOG("attach_ret:%d", attach_ret);
-    if (attach_ret) {
+    if (attach_ret == 0) {
         // 数据获取(电脑名称)
         jobject computer = param->param_target;
         jclass clzComputer = env->GetObjectClass(computer);
@@ -365,15 +365,49 @@ Java_com_alie_modulepracticendk_NativeRaw_generateVehicle__Ljava_lang_String_2(J
 
     const char *p_car_frame = "AE_86";
     jobject carFrame = Java_com_alie_modulepracticendk_NativeRaw_generateCarFrame(
-            env, thiz,env->NewStringUTF(p_car_frame));
+            env, thiz, env->NewStringUTF(p_car_frame));
     const char *p_car_wheel = "普利司通";
     jobject carWheel = Java_com_alie_modulepracticendk_NativeRaw_generateCarWheel(
-            env, thiz,env->NewStringUTF(p_car_wheel));
-    const char* p_car_engine = "LA_FA_001";
+            env, thiz, env->NewStringUTF(p_car_wheel));
+    const char *p_car_engine = "LA_FA_001";
     jobject carEngine = Java_com_alie_modulepracticendk_NativeRaw_generateCarEngine(
-            env,thiz,env->NewStringUTF(p_car_engine));
-    return  Java_com_alie_modulepracticendk_NativeRaw_generateVehicle__Ljava_lang_String_2Lcom_alie_modulepracticendk_bean_car_CarEngine_2Lcom_alie_modulepracticendk_bean_car_CarFrame_2Lcom_alie_modulepracticendk_bean_car_CarWheel_2(
-            env,thiz,name,carEngine,carFrame,carWheel);
+            env, thiz, env->NewStringUTF(p_car_engine));
+    return Java_com_alie_modulepracticendk_NativeRaw_generateVehicle__Ljava_lang_String_2Lcom_alie_modulepracticendk_bean_car_CarEngine_2Lcom_alie_modulepracticendk_bean_car_CarFrame_2Lcom_alie_modulepracticendk_bean_car_CarWheel_2(
+            env, thiz, name, carEngine, carFrame, carWheel);
 
 }
 
+
+struct Param0519 {
+    jstring mName;
+};
+
+void *thread_execute_fun_0519(void *args) {
+
+    Param0519 *p_param = static_cast<Param0519 *>(args);
+    JNIEnv *env;
+    jint attachRet = mVm->AttachCurrentThread(&env, 0);
+    PRINT_LOG("attachRet:%d", attachRet);
+    if (attachRet == 0) {
+
+  //todo still has problem need to fix up
+//        const char* p_name = env->GetStringUTFChars(p_param->mName,0);
+//        PRINT_LOG("===名称:%s",p_name);
+        PRINT_LOG("===名称:%d",15);
+    }
+    jint detachRet = mVm->DetachCurrentThread();
+    PRINT_LOG("===detachRet:%d", detachRet);
+    free(p_param);
+    p_param = 0 ;
+    return 0;
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_alie_modulepracticendk_NativeRaw_printDataThread0519(JNIEnv *env, jobject thiz,
+                                                              jstring name) {
+    pthread_t pid;
+    Param0519 *p_param = static_cast<Param0519 *>(malloc(sizeof(Param0519)));
+    p_param->mName = name;
+    pthread_create(&pid, 0, thread_execute_fun_0519, p_param);
+}
