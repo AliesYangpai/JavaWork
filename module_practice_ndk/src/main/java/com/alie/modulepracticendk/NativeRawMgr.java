@@ -123,5 +123,14 @@ public class NativeRawMgr {
                 + vehicle.getCarFrame().getFrameName() + " "
                 + vehicle.getCaWheel().getWheelName());
     }
+
+    void doTest13() {
+        showLog("doTest13");
+        Vehicle vehicle = mNativeRaw.generateVehicle("波波汽车");
+        showLog(vehicle.getVehicleName() + " "
+                + vehicle.getCarEngine().getEngineName() + " "
+                + vehicle.getCarFrame().getFrameName() + " "
+                + vehicle.getCaWheel().getWheelName());
+    }
 }
 

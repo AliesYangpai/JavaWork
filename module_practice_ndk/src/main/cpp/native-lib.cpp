@@ -316,19 +316,21 @@ JNIEXPORT jobject JNICALL
 Java_com_alie_modulepracticendk_NativeRaw_generateCarEngine(JNIEnv *env, jobject thiz,
                                                             jstring name) {
     const char *p_package = "com/alie/modulepracticendk/bean/car/CarEngine";
-    jclass classCarEngine =  env->FindClass(p_package);
-    jmethodID  constructCarEngine = env->GetMethodID(classCarEngine,"<init>", "(Ljava/lang/String;)V");
-   return env->NewObject(classCarEngine,constructCarEngine,name);
+    jclass classCarEngine = env->FindClass(p_package);
+    jmethodID constructCarEngine = env->GetMethodID(classCarEngine, "<init>",
+                                                    "(Ljava/lang/String;)V");
+    return env->NewObject(classCarEngine, constructCarEngine, name);
 }
 
 extern "C"
 JNIEXPORT jobject JNICALL
 Java_com_alie_modulepracticendk_NativeRaw_generateCarFrame(JNIEnv *env, jobject thiz,
                                                            jstring name) {
-    const char* p_package = "com/alie/modulepracticendk/bean/car/CarFrame";
-   jclass classCarFrame =  env->FindClass(p_package);
-   jmethodID  constructCarFrame = env->GetMethodID(classCarFrame,"<init>", "(Ljava/lang/String;)V");
-    return env->NewObject(classCarFrame,constructCarFrame,name);
+    const char *p_package = "com/alie/modulepracticendk/bean/car/CarFrame";
+    jclass classCarFrame = env->FindClass(p_package);
+    jmethodID constructCarFrame = env->GetMethodID(classCarFrame, "<init>",
+                                                   "(Ljava/lang/String;)V");
+    return env->NewObject(classCarFrame, constructCarFrame, name);
 }
 
 extern "C"
@@ -336,10 +338,23 @@ JNIEXPORT jobject JNICALL
 Java_com_alie_modulepracticendk_NativeRaw_generateCarWheel(JNIEnv *env, jobject thiz,
                                                            jstring name) {
 
-    const char* p_package = "com/alie/modulepracticendk/bean/car/CarWheel";
-    jclass classCarWheel =  env->FindClass(p_package);
-   jmethodID constructCarWheel =  env->GetMethodID(classCarWheel,"<init>", "(Ljava/lang/String;)V");
-    return env->NewObject(classCarWheel,constructCarWheel,name);
+    const char *p_package = "com/alie/modulepracticendk/bean/car/CarWheel";
+    jclass classCarWheel = env->FindClass(p_package);
+    jmethodID constructCarWheel = env->GetMethodID(classCarWheel, "<init>",
+                                                   "(Ljava/lang/String;)V");
+    return env->NewObject(classCarWheel, constructCarWheel, name);
+}
+
+extern "C"
+JNIEXPORT jobject JNICALL
+Java_com_alie_modulepracticendk_NativeRaw_generateVehicle__Ljava_lang_String_2Lcom_alie_modulepracticendk_bean_car_CarEngine_2Lcom_alie_modulepracticendk_bean_car_CarFrame_2Lcom_alie_modulepracticendk_bean_car_CarWheel_2(
+        JNIEnv *env, jobject thiz, jstring name, jobject car_engine, jobject car_frame,
+        jobject car_wheel) {
+    const char *p_package = "com/alie/modulepracticendk/bean/car/Vehicle";
+    jclass classVehicle = env->FindClass(p_package);
+    jmethodID constructVehicle = env->GetMethodID(classVehicle, "<init>",
+                                                  "(Ljava/lang/String;Lcom/alie/modulepracticendk/bean/car/CarEngine;Lcom/alie/modulepracticendk/bean/car/CarFrame;Lcom/alie/modulepracticendk/bean/car/CarWheel;)V");
+    return env->NewObject(classVehicle, constructVehicle, name, car_engine, car_frame, car_wheel);
 }
 
 extern "C"
@@ -348,15 +363,17 @@ Java_com_alie_modulepracticendk_NativeRaw_generateVehicle__Ljava_lang_String_2(J
                                                                                jobject thiz,
                                                                                jstring name) {
 
+    const char *p_car_frame = "AE_86";
+    jobject carFrame = Java_com_alie_modulepracticendk_NativeRaw_generateCarFrame(
+            env, thiz,env->NewStringUTF(p_car_frame));
+    const char *p_car_wheel = "普利司通";
+    jobject carWheel = Java_com_alie_modulepracticendk_NativeRaw_generateCarWheel(
+            env, thiz,env->NewStringUTF(p_car_wheel));
+    const char* p_car_engine = "LA_FA_001";
+    jobject carEngine = Java_com_alie_modulepracticendk_NativeRaw_generateCarEngine(
+            env,thiz,env->NewStringUTF(p_car_engine));
+    return  Java_com_alie_modulepracticendk_NativeRaw_generateVehicle__Ljava_lang_String_2Lcom_alie_modulepracticendk_bean_car_CarEngine_2Lcom_alie_modulepracticendk_bean_car_CarFrame_2Lcom_alie_modulepracticendk_bean_car_CarWheel_2(
+            env,thiz,name,carEngine,carFrame,carWheel);
+
 }
 
-extern "C"
-JNIEXPORT jobject JNICALL
-Java_com_alie_modulepracticendk_NativeRaw_generateVehicle__Ljava_lang_String_2Lcom_alie_modulepracticendk_bean_car_CarEngine_2Lcom_alie_modulepracticendk_bean_car_CarFrame_2Lcom_alie_modulepracticendk_bean_car_CarWheel_2(
-        JNIEnv *env, jobject thiz, jstring name, jobject car_engine, jobject car_frame,
-        jobject car_wheel) {
-    const char* p_package = "com/alie/modulepracticendk/bean/car/Vehicle";
-    jclass  classVehicle = env->FindClass(p_package);
-    jmethodID constructVehicle =  env->GetMethodID(classVehicle,"<init>", "(Ljava/lang/String;Lcom/alie/modulepracticendk/bean/car/CarEngine;Lcom/alie/modulepracticendk/bean/car/CarFrame;Lcom/alie/modulepracticendk/bean/car/CarWheel;)V");
-    return env->NewObject(classVehicle,constructVehicle,name,car_engine,car_frame,car_wheel);
-}
