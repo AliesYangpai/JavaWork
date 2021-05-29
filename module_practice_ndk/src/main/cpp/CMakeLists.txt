@@ -11,7 +11,7 @@ project("module_practice_ndk")
 
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
-# You can define multiple libraries, and CMake builds them for you.
+# You can define multiple libraries, and  CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
 
 add_library( # Sets the name of the library.
@@ -28,7 +28,7 @@ add_library( # Sets the name of the library.
 # default, you only need to specify the name of the public NDK library
 # you want to add. CMake verifies that the library exists before
 # completing its build.
-
+# PATH : D:\Address\Android\Sdk\ndk\21.1.6352462\platforms\android-27\arch-arm64\usr\lib
 find_library( # Sets the name of the path variable.
               log-lib
 
@@ -39,7 +39,7 @@ find_library( # Sets the name of the path variable.
 # Specifies libraries CMake should link to your target library. You
 # can link multiple libraries, such as libraries you define in this
 # build script, prebuilt third-party libraries, or system libraries.
-
+# We don't have to Declares "find_library(xx xx)",target_link_libraries will do link automatically
 target_link_libraries( # Specifies the target library.
                        native-lib
 
