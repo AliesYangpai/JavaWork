@@ -28,4 +28,6 @@ class MainActivity : AppCompatActivity() {
     private fun startMethod() {
         doTest01()//【fast click】 fast click test
     }
+
+
 }
