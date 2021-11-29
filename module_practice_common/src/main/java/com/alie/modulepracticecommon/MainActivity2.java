@@ -4,9 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.alie.modulepracticecommon.checkinterface.TestClass;
-import com.alie.modulepracticecommon.checkinterface.TestInterface1;
-import com.alie.modulepracticecommon.checkinterface.TestInterface2;
 
 public class MainActivity2 extends AppCompatActivity {
 
