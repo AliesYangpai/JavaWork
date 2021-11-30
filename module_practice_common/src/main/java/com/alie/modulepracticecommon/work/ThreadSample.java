@@ -1,5 +1,9 @@
 package com.alie.modulepracticecommon.work;
 
+/**
+ * part1
+ * be familiar with synchronized
+ */
 public class ThreadSample {
     private final Byte[] lock = {};
 
