@@ -1,7 +1,7 @@
 package com.alie.modulepracticecommon;
 
-import com.alie.modulepracticecommon.work.ThreadSample;
-import com.alie.modulepracticecommon.work.ThreadSample2;
+import com.alie.modulepracticecommon.work.ThreadModel1;
+import com.alie.modulepracticecommon.work.ThreadModel2;
 
 import org.junit.Test;
 
@@ -24,10 +24,10 @@ public class ExampleUnitJavaTest {
     @Test
     public void test02() {
         doPrint("test02");
-        ThreadSample threadSample = new ThreadSample();
-        threadSample.add();
-        threadSample.decrease();
-        threadSample.showData();
+        ThreadModel1 threadModel1 = new ThreadModel1();
+        threadModel1.add();
+        threadModel1.decrease();
+        threadModel1.showData();
     }
 
 
@@ -38,14 +38,14 @@ public class ExampleUnitJavaTest {
     @Test
     public void test03() {
         doPrint("test03");
-        ThreadSample2 threadSample2 = new ThreadSample2();
-        for (int i = 0; i < ThreadSample2.SIZE; i++) {
+        ThreadModel2 threadModel2 = new ThreadModel2();
+        for (int i = 0; i < ThreadModel2.SIZE; i++) {
             int finalI = i;
-            new Thread(() -> threadSample2.addToQueue(String.valueOf(finalI))).start();
+            new Thread(() -> threadModel2.addToQueue(String.valueOf(finalI))).start();
         }
-        for (int i = 0; i < ThreadSample2.SIZE2; i++) {
+        for (int i = 0; i < ThreadModel2.SIZE2; i++) {
             new Thread(() -> {
-                String data = threadSample2.popQueue();
+                String data = threadModel2.popQueue();
                 System.out.println("===data:"+data);
             }).start();
         }

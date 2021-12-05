@@ -8,7 +8,7 @@ import java.util.Queue;
  * be familiar with obj.wait() & obj.notify()、obj.notifyAll()
  *
  */
-public class ThreadSample2 {
+public class ThreadModel2 {
     public static final int SIZE = 1000;
 
     public static final int SIZE2 = 30;

@@ -4,7 +4,7 @@ package com.alie.modulepracticecommon.work;
  * part1
  * be familiar with synchronized
  */
-public class ThreadSample {
+public class ThreadModel1 {
     private final Byte[] lock = {};
 
     private static final int SIZE = 10000;
