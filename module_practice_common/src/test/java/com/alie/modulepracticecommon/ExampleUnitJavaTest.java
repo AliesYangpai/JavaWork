@@ -2,6 +2,7 @@ package com.alie.modulepracticecommon;
 
 import com.alie.modulepracticecommon.work.ThreadModel1;
 import com.alie.modulepracticecommon.work.ThreadModel2;
+import com.alie.modulepracticecommon.work.ThreadModel3;
 
 import org.junit.Test;
 
@@ -49,7 +50,17 @@ public class ExampleUnitJavaTest {
                 System.out.println("===data:"+data);
             }).start();
         }
+    }
 
-
+    /**
+     * ReentrantLock
+     */
+    @Test
+    public void test04() {
+        doPrint("test04");
+        ThreadModel3 threadModel3 = new ThreadModel3();
+        threadModel3.increaseCount();
+        threadModel3.decreaseCount();
+        threadModel3.showData();
     }
 }
