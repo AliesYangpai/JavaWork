@@ -3,6 +3,7 @@ package com.alie.modulepracticecommon;
 import com.alie.modulepracticecommon.work.ThreadModel1;
 import com.alie.modulepracticecommon.work.ThreadModel2;
 import com.alie.modulepracticecommon.work.ThreadModel3;
+import com.alie.modulepracticecommon.work.ThreadModel4;
 
 import org.junit.Test;
 
@@ -62,5 +63,26 @@ public class ExampleUnitJavaTest {
         threadModel3.increaseCount();
         threadModel3.decreaseCount();
         threadModel3.showData();
+    }
+
+    /**
+     * ReentrantLock
+     * lock.newCondition();
+     */
+    @Test
+    public void test() {
+        doPrint("test04");
+        ThreadModel4 threadModel4 = new ThreadModel4();
+        for (int i = 0; i < ThreadModel4.PRODUCE_COUNT; i++) {
+            int finalI = i;
+            new Thread(()-> threadModel4.addToQueue(String.valueOf(finalI))).start();
+        }
+
+        for (int i = 0; i < ThreadModel4.CONSUME_COUNT; i++) {
+            new Thread(()->{
+                String data = threadModel4.popQueue();
+                System.out.println("===popQueue data:"+data);
+            }).start();
+        }
     }
 }
