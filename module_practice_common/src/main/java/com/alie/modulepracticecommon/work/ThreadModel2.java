@@ -1,39 +1,43 @@
 package com.alie.modulepracticecommon.work;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
 /**
- * part2
- * be familiar with obj.wait() & obj.notify()、obj.notifyAll()
- *
+ * part1
+ * be familiar with synchronized
  */
 public class ThreadModel2 {
-    public static final int SIZE = 1000;
+    private final Byte[] lock = {};
 
-    public static final int SIZE2 = 30;
-    private Queue<String> queue = new LinkedList<>();
-    private byte[]  lock = {};
+    private static final int SIZE = 10000;
+    private int count = 0;
 
 
-    public void addToQueue(String param) {
-        synchronized (lock) {
-            queue.add(param);
-            System.out.println("===addToQueue param:"+param);
-            lock.notifyAll(); // obj.notify() awake single stochastic thread waiting on the monitor,so  I prefer obj.notifyAll()
-        }
-    }
-
-    public String popQueue() {
-        synchronized (lock) {
-            while (queue.isEmpty()) {
-                try {
-                    lock.wait(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+    public void add() {
+        new Thread(()->{
+            for (int i = 0; i < SIZE; i++) {
+                synchronized (lock){ // must be same lock in add() & decrease()
+                    count++;
                 }
             }
-            return queue.remove();
+        }).start();
+    }
+
+    public void decrease(){
+        new Thread(()->{
+            for (int i = 0; i < SIZE; i++) {
+                synchronized (lock) { // must be same lock in add() & decrease()
+                    count--;
+                }
+            }
+        }).start();
+    }
+
+    public void showData() {
+        try {
+            Thread.sleep(2000);
+            System.out.println("===count:"+count);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+
     }
 }

@@ -1,48 +1,39 @@
 package com.alie.modulepracticecommon.work;
 
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * part 3
- * replace synchronized with ReentrantLock
+ * be familiar with obj.wait() & obj.notify()、obj.notifyAll()
+ *
  */
 public class ThreadModel3 {
-    private static final int SIZE = 100000;
-    private int count = 0;
-    private final ReentrantLock reentrantLock = new ReentrantLock();
+    public static final int SIZE = 1000;
 
-    public void increaseCount() {
-        new Thread(() -> {
-            for (int i = 0; i < SIZE; i++) {
-                reentrantLock.lock();
-                try {
-                    count++;
-                } finally {
-                    reentrantLock.unlock();
-                }
-            }
-        }).start();
+    public static final int SIZE2 = 30;
+    private Queue<String> queue = new LinkedList<>();
+    private byte[]  lock = {};
+
+
+    public void addToQueue(String param) {
+        synchronized (lock) {
+            queue.add(param);
+            System.out.println("===addToQueue param:"+param);
+            lock.notifyAll(); // obj.notify() awake single stochastic thread waiting on the monitor,so  I prefer obj.notifyAll()
+        }
     }
 
-    public void decreaseCount() {
-        new Thread(() -> {
-            for (int i = 0; i < SIZE; i++) {
-                reentrantLock.lock();
+    public String popQueue() {
+        synchronized (lock) {
+            while (queue.isEmpty()) {
                 try {
-                    count--;
-                } finally {
-                    reentrantLock.unlock();
+                    lock.wait(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
-        }).start();
-    }
-
-    public void showData() {
-        try {
-            Thread.sleep(2000);
-            System.out.println("===count:" + count);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            return queue.remove();
         }
     }
 }

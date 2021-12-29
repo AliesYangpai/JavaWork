@@ -1,46 +1,48 @@
 package com.alie.modulepracticecommon.work;
 
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * part 4
+ * replace synchronized with ReentrantLock
+ */
 public class ThreadModel4 {
+    private static final int SIZE = 100000;
+    private int count = 0;
+    private final ReentrantLock reentrantLock = new ReentrantLock();
 
-    private Queue<String> queue = new LinkedList<>();
-    private ReentrantLock lock = new ReentrantLock();
-    private Condition condition = lock.newCondition();
-
-    public static final int PRODUCE_COUNT = 50;
-    public static final int CONSUME_COUNT = 500;
-
-    public void addToQueue(String param) {
-        lock.lock();
-        try {
-            queue.add(param);
-            System.out.println("===addToQueue param:"+param);
-            condition.signalAll();
-        } finally {
-            lock.unlock();
-        }
-    }
-
-    public String popQueue() {
-        lock.lock();
-        try {
-            while (queue.isEmpty()) {
-                boolean ret = condition.await(1000, TimeUnit.MILLISECONDS);
-                if (!ret) {
-                    return null;
+    public void increaseCount() {
+        new Thread(() -> {
+            for (int i = 0; i < SIZE; i++) {
+                reentrantLock.lock();
+                try {
+                    count++;
+                } finally {
+                    reentrantLock.unlock();
                 }
             }
-            return queue.remove();
+        }).start();
+    }
+
+    public void decreaseCount() {
+        new Thread(() -> {
+            for (int i = 0; i < SIZE; i++) {
+                reentrantLock.lock();
+                try {
+                    count--;
+                } finally {
+                    reentrantLock.unlock();
+                }
+            }
+        }).start();
+    }
+
+    public void showData() {
+        try {
+            Thread.sleep(2000);
+            System.out.println("===count:" + count);
         } catch (InterruptedException e) {
             e.printStackTrace();
-            return null;
-        } finally {
-            lock.unlock();
         }
     }
 }

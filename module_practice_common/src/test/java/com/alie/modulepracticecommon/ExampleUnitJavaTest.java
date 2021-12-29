@@ -1,9 +1,10 @@
 package com.alie.modulepracticecommon;
 
-import com.alie.modulepracticecommon.work.ThreadModel1;
 import com.alie.modulepracticecommon.work.ThreadModel2;
 import com.alie.modulepracticecommon.work.ThreadModel3;
 import com.alie.modulepracticecommon.work.ThreadModel4;
+import com.alie.modulepracticecommon.work.ThreadModel5;
+import com.alie.modulepracticecommon.work.ThreadModel6;
 
 import org.junit.Test;
 
@@ -26,10 +27,10 @@ public class ExampleUnitJavaTest {
     @Test
     public void test02() {
         doPrint("test02");
-        ThreadModel1 threadModel1 = new ThreadModel1();
-        threadModel1.add();
-        threadModel1.decrease();
-        threadModel1.showData();
+        ThreadModel2 threadModel2 = new ThreadModel2();
+        threadModel2.add();
+        threadModel2.decrease();
+        threadModel2.showData();
     }
 
 
@@ -40,14 +41,14 @@ public class ExampleUnitJavaTest {
     @Test
     public void test03() {
         doPrint("test03");
-        ThreadModel2 threadModel2 = new ThreadModel2();
-        for (int i = 0; i < ThreadModel2.SIZE; i++) {
+        ThreadModel3 threadModel3 = new ThreadModel3();
+        for (int i = 0; i < ThreadModel3.SIZE; i++) {
             int finalI = i;
-            new Thread(() -> threadModel2.addToQueue(String.valueOf(finalI))).start();
+            new Thread(() -> threadModel3.addToQueue(String.valueOf(finalI))).start();
         }
-        for (int i = 0; i < ThreadModel2.SIZE2; i++) {
+        for (int i = 0; i < ThreadModel3.SIZE2; i++) {
             new Thread(() -> {
-                String data = threadModel2.popQueue();
+                String data = threadModel3.popQueue();
                 System.out.println("===data:"+data);
             }).start();
         }
@@ -59,10 +60,10 @@ public class ExampleUnitJavaTest {
     @Test
     public void test04() {
         doPrint("test04");
-        ThreadModel3 threadModel3 = new ThreadModel3();
-        threadModel3.increaseCount();
-        threadModel3.decreaseCount();
-        threadModel3.showData();
+        ThreadModel4 threadModel4 = new ThreadModel4();
+        threadModel4.increaseCount();
+        threadModel4.decreaseCount();
+        threadModel4.showData();
     }
 
     /**
@@ -70,17 +71,34 @@ public class ExampleUnitJavaTest {
      * lock.newCondition();
      */
     @Test
-    public void test() {
-        doPrint("test04");
-        ThreadModel4 threadModel4 = new ThreadModel4();
-        for (int i = 0; i < ThreadModel4.PRODUCE_COUNT; i++) {
+    public void test05() {
+        doPrint("test05");
+        ThreadModel5 threadModel5 = new ThreadModel5();
+        for (int i = 0; i < ThreadModel5.PRODUCE_COUNT; i++) {
             int finalI = i;
-            new Thread(()-> threadModel4.addToQueue(String.valueOf(finalI))).start();
+            new Thread(()-> threadModel5.addToQueue(String.valueOf(finalI))).start();
         }
 
-        for (int i = 0; i < ThreadModel4.CONSUME_COUNT; i++) {
+        for (int i = 0; i < ThreadModel5.CONSUME_COUNT; i++) {
             new Thread(()->{
-                String data = threadModel4.popQueue();
+                String data = threadModel5.popQueue();
+                System.out.println("===popQueue data:"+data);
+            }).start();
+        }
+    }
+
+    @Test
+    public void test06() {
+        doPrint("test06");
+        ThreadModel6 threadModel6 = new ThreadModel6();
+        for (int i = 0; i < ThreadModel6.PRODUCE_COUNT; i++) {
+            int finalI = i;
+            new Thread(()-> threadModel6.addToQueue(String.valueOf(finalI))).start();
+        }
+
+        for (int i = 0; i < ThreadModel6.CONSUME_COUNT; i++) {
+            new Thread(()->{
+                String data = threadModel6.popQueue();
                 System.out.println("===popQueue data:"+data);
             }).start();
         }
