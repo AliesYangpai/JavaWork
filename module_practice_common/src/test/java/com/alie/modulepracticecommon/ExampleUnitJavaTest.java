@@ -5,6 +5,7 @@ import com.alie.modulepracticecommon.work.ThreadModel3;
 import com.alie.modulepracticecommon.work.ThreadModel4;
 import com.alie.modulepracticecommon.work.ThreadModel5;
 import com.alie.modulepracticecommon.work.ThreadModel6;
+import com.alie.modulepracticecommon.work.ThreadModel7;
 
 import org.junit.Test;
 
@@ -69,6 +70,8 @@ public class ExampleUnitJavaTest {
     /**
      * ReentrantLock
      * lock.newCondition();
+     * await；
+     * signalAll;
      */
     @Test
     public void test05() {
@@ -87,6 +90,10 @@ public class ExampleUnitJavaTest {
         }
     }
 
+
+    /**
+     * ReentrantReadWriteLock
+     */
     @Test
     public void test06() {
         doPrint("test06");
@@ -100,6 +107,23 @@ public class ExampleUnitJavaTest {
             new Thread(()->{
                 threadModel6.readInfo();
             }).start();
+        }
+    }
+
+    /**
+     * StampedLock
+     */
+    @Test
+    public void test07() {
+        doPrint("test07");
+        ThreadModel7 threadModel7 = new ThreadModel7();
+        for (int i = 0; i < ThreadModel7.PRODUCE_COUNT; i++) {
+            int finalI = i;
+            new Thread(()-> threadModel7.addToQueue(String.valueOf(finalI))).start();
+        }
+
+        for (int i = 0; i < ThreadModel7.CONSUME_COUNT; i++) {
+            new Thread(threadModel7::readInfo).start();
         }
     }
 }
