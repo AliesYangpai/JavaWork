@@ -98,8 +98,7 @@ public class ExampleUnitJavaTest {
 
         for (int i = 0; i < ThreadModel6.CONSUME_COUNT; i++) {
             new Thread(()->{
-                String data = threadModel6.popQueue();
-                System.out.println("===popQueue data:"+data);
+                threadModel6.readInfo();
             }).start();
         }
     }

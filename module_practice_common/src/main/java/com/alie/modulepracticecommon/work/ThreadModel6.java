@@ -5,6 +5,7 @@ import java.util.Queue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.function.Consumer;
 
 /**
  * part 6
@@ -23,22 +24,21 @@ public class ThreadModel6 {
         writeLock.lock();
         try{
             queue.add(param);
+            System.out.println("addToQueue param:"+param);
         }finally {
             writeLock.unlock();
         }
     }
 
 
-    public String popQueue() {
+    public void readInfo() {
         readLock.lock();
-        String data = null;
         try{
             if (!queue.isEmpty()) {
-                data = queue.remove();
+                queue.forEach(s -> System.out.println( "=== currentThread:"+Thread.currentThread().getName()+" value:"+s));
             }
         } finally {
             readLock.unlock();
         }
-        return data;
     }
 }
