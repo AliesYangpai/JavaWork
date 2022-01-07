@@ -2,7 +2,6 @@ package com.alie.modulepracticecommon
 
 import android.app.Application
 
-
 class CommonAppication : Application() {
     companion object {
         private var mInstance: CommonAppication? = null
