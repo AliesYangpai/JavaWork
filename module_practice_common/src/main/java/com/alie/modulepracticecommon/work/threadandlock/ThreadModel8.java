@@ -1,4 +1,4 @@
-package com.alie.modulepracticecommon.work;
+package com.alie.modulepracticecommon.work.threadandlock;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

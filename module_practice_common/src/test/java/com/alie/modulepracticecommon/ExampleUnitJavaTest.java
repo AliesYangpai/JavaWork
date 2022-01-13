@@ -1,12 +1,13 @@
 package com.alie.modulepracticecommon;
 
-import com.alie.modulepracticecommon.work.ThreadModel2;
-import com.alie.modulepracticecommon.work.ThreadModel3;
-import com.alie.modulepracticecommon.work.ThreadModel4;
-import com.alie.modulepracticecommon.work.ThreadModel5;
-import com.alie.modulepracticecommon.work.ThreadModel6;
-import com.alie.modulepracticecommon.work.ThreadModel7;
-import com.alie.modulepracticecommon.work.ThreadModel8;
+import com.alie.modulepracticecommon.work.refletion.ClassUtil;
+import com.alie.modulepracticecommon.work.threadandlock.ThreadModel2;
+import com.alie.modulepracticecommon.work.threadandlock.ThreadModel3;
+import com.alie.modulepracticecommon.work.threadandlock.ThreadModel4;
+import com.alie.modulepracticecommon.work.threadandlock.ThreadModel5;
+import com.alie.modulepracticecommon.work.threadandlock.ThreadModel6;
+import com.alie.modulepracticecommon.work.threadandlock.ThreadModel7;
+import com.alie.modulepracticecommon.work.threadandlock.ThreadModel8;
 
 import org.junit.Test;
 
@@ -144,5 +145,17 @@ public class ExampleUnitJavaTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Reflection
+     */
+    @Test
+    public void test09() {
+        doPrint("test09");
+        String packageName = "com.alie.modulepracticecommon.work.threadandlock.ThreadModel2";
+        ThreadModel2 threadModel2 = new ThreadModel2();
+        ClassUtil.showClassInfo1(packageName);
+        ClassUtil.showClassInfo2(threadModel2);
     }
 }
