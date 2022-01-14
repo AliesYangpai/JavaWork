@@ -1,6 +1,7 @@
 package com.alie.modulepracticecommon;
 
 import com.alie.modulepracticecommon.work.refletion.ClassUtil;
+import com.alie.modulepracticecommon.work.refletion.Robot;
 import com.alie.modulepracticecommon.work.threadandlock.ThreadModel2;
 import com.alie.modulepracticecommon.work.threadandlock.ThreadModel3;
 import com.alie.modulepracticecommon.work.threadandlock.ThreadModel4;
@@ -10,6 +11,9 @@ import com.alie.modulepracticecommon.work.threadandlock.ThreadModel7;
 import com.alie.modulepracticecommon.work.threadandlock.ThreadModel8;
 
 import org.junit.Test;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 public class ExampleUnitJavaTest {
 
@@ -141,7 +145,7 @@ public class ExampleUnitJavaTest {
         }
         try {
             Thread.sleep(2000);
-            System.out.println("money = "+threadModel8.getAllMoney());
+            System.out.println("money = " + threadModel8.getAllMoney());
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -157,5 +161,28 @@ public class ExampleUnitJavaTest {
         ThreadModel2 threadModel2 = new ThreadModel2();
         ClassUtil.showClassInfo1(packageName);
         ClassUtil.showClassInfo2(threadModel2);
+    }
+
+    @Test
+    public void test10() {
+        doPrint("test10");
+        Robot robot = new Robot("Terminator001", 10, "COMPREHENSIVE", 15.63F);
+        try {
+            Field fieldPrice = robot.getClass().getDeclaredField("price");
+            Class<?> type = fieldPrice.getType();
+            Float value = (Float) fieldPrice.get(robot);
+            doPrint("the type:" + type.getSimpleName() + "  value:" + value);
+
+
+            Field filedName = robot.getClass().getDeclaredField("name");
+            int modifierName = filedName.getModifiers();
+            if (Modifier.isPrivate(modifierName)) {
+                filedName.setAccessible(true);
+            }
+            String name = (String) filedName.get(robot);
+            doPrint("the name is :" + name);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 }
