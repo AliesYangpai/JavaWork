@@ -13,6 +13,8 @@ import com.alie.modulepracticecommon.work.threadandlock.ThreadModel8;
 import org.junit.Test;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 public class ExampleUnitJavaTest {
@@ -153,6 +155,7 @@ public class ExampleUnitJavaTest {
 
     /**
      * Reflection
+     * part1 Class
      */
     @Test
     public void test09() {
@@ -163,6 +166,10 @@ public class ExampleUnitJavaTest {
         ClassUtil.showClassInfo2(threadModel2);
     }
 
+    /**
+     * Reflection
+     * part2 field
+     */
     @Test
     public void test10() {
         doPrint("test10");
@@ -172,8 +179,6 @@ public class ExampleUnitJavaTest {
             Class<?> type = fieldPrice.getType();
             Float value = (Float) fieldPrice.get(robot);
             doPrint("the type:" + type.getSimpleName() + "  value:" + value);
-
-
             Field filedName = robot.getClass().getDeclaredField("name");
             int modifierName = filedName.getModifiers();
             if (Modifier.isPrivate(modifierName)) {
@@ -185,4 +190,36 @@ public class ExampleUnitJavaTest {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Reflection
+     * part3 Method
+     */
+    @Test
+    public void test11() {
+        doPrint("test11");
+        Robot robot = new Robot("Terminator001", 10, "COMPREHENSIVE", 15.63F);
+        Class<? extends Robot> aClass = robot.getClass();
+        try {
+            Method speakMethod = aClass.getDeclaredMethod("speak");
+            if (Modifier.isPrivate(speakMethod.getModifiers())) {
+                speakMethod.setAccessible(true);
+            }
+            speakMethod.invoke(robot);
+
+            Method learnMethod = aClass.getDeclaredMethod("learn", String.class);
+            if (Modifier.isPrivate(learnMethod.getModifiers())) {
+                learnMethod.setAccessible(true);
+            }
+            learnMethod.invoke(robot,"do laundry");
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }
