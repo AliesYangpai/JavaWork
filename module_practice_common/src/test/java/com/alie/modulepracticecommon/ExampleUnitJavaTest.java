@@ -222,4 +222,40 @@ public class ExampleUnitJavaTest {
 
     }
 
+    /**
+     * Reflection
+     * part3 method review
+     */
+    @Test
+    public void test12() {
+        doPrint("test12");
+        Robot robot = new Robot("Terminator001", 10, "COMPREHENSIVE", 15.63F);
+        Class<? extends Robot> aClass = robot.getClass();
+        try {
+            Field fieldName = aClass.getDeclaredField("name");
+            Method methodSpeak = aClass.getDeclaredMethod("speak");
+            Method methodLearn = aClass.getDeclaredMethod("learn", String.class);
+            if (Modifier.isPrivate(fieldName.getModifiers())) {
+                fieldName.setAccessible(true);
+            }
+            if (Modifier.isPrivate(methodSpeak.getModifiers())) {
+                methodSpeak.setAccessible(true);
+            }
+            if (Modifier.isPrivate(methodLearn.getModifiers())) {
+                methodLearn.setAccessible(true);
+            }
+            String name = (String) fieldName.get(robot);
+            doPrint(name);
+            methodSpeak.invoke(robot);
+            methodLearn.invoke(robot,"hi practice");
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+    }
 }
