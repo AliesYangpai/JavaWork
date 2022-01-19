@@ -12,6 +12,7 @@ import com.alie.modulepracticecommon.work.threadandlock.ThreadModel8;
 
 import org.junit.Test;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -211,7 +212,7 @@ public class ExampleUnitJavaTest {
             if (Modifier.isPrivate(learnMethod.getModifiers())) {
                 learnMethod.setAccessible(true);
             }
-            learnMethod.invoke(robot,"do laundry");
+            learnMethod.invoke(robot, "do laundry");
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -247,12 +248,65 @@ public class ExampleUnitJavaTest {
             String name = (String) fieldName.get(robot);
             doPrint(name);
             methodSpeak.invoke(robot);
-            methodLearn.invoke(robot,"hi practice");
+            methodLearn.invoke(robot, "hi practice");
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Reflection
+     * part4 public construction with no param
+     * class.newInstance() only follow
+     * 1.public construction
+     * 2.no param
+     */
+    @Test
+    public void test13() {
+        doPrint("test13");
+        try {
+            Robot robot = Robot.class.newInstance();
+            robot.setAge(15);
+            robot.setName("Terminator001");
+            doPrint(robot.getName());
+            doPrint(robot.getAge() + "");
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Reflection
+     * part5 construction -- all situation
+     * class.getConstructor(class)
+     */
+    @Test
+    public void test14() {
+        doPrint("test14");
+        try {
+            Class aClass = Class.forName("com.alie.modulepracticecommon.work.refletion.Robot");
+            Constructor constructor = aClass.getConstructor(String.class, int.class);
+            if (!Modifier.isPublic(constructor.getModifiers())) {
+                constructor.setAccessible(true);
+            }
+            Robot robot = (Robot) constructor.newInstance("Terminator001", 99);
+            doPrint(robot.getName());
+            doPrint(robot.getAge() + "");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
             e.printStackTrace();
