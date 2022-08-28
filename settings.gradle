@@ -10,3 +10,4 @@ include ':lib_practice_api_synchronized'
 include ':lib_practice_api_object'
 include ':app'
 rootProject.name = "JavaWork"
+include ':module_practice_reflect'
