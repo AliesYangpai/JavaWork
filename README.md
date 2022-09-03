@@ -16,3 +16,4 @@ This project is a java practice collection
 > * [module_practice_common] module sample to show android commons such as some utils 
 > * [module_practice_reflect] module sample to show android reflect   
 > * [module_practice_aop] module sample to show common aop   
+> * [module_practice_aop_annotation] module sample to show aop with annotation   
