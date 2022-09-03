@@ -15,3 +15,4 @@ This project is a java practice collection
 > * [module_practice_polymorphism] module sample to show polymorphism for java and associate with c++
 > * [module_practice_common] module sample to show android commons such as some utils 
 > * [module_practice_reflect] module sample to show android reflect   
+> * [module_practice_aop] module sample to show common aop   
