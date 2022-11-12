@@ -1,4 +1,4 @@
-package com.alie.modulepracticepolymorphism.bean.java;
+package com.alie.modulepracticepolymorphism.bean.java.test01;
 
 public abstract class BaseAnimal {
     public BaseAnimal() {

@@ -5,10 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.alie.modulepracticepolymorphism.bean.java.Animal;
-import com.alie.modulepracticepolymorphism.bean.java.BaseAnimal;
-import com.alie.modulepracticepolymorphism.bean.java.Caw;
-import com.alie.modulepracticepolymorphism.bean.java.Dog;
+import com.alie.modulepracticepolymorphism.bean.java.test01.Animal;
+import com.alie.modulepracticepolymorphism.bean.java.test01.BaseAnimal;
+import com.alie.modulepracticepolymorphism.bean.java.test01.Caw;
+import com.alie.modulepracticepolymorphism.bean.java.test01.Dog;
+import com.alie.modulepracticepolymorphism.bean.java.test02.Container;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -79,5 +83,26 @@ public class MainActivity extends AppCompatActivity {
          */
         //=============end==============
         doTest03();//【polymorphism】polymorphism for LSP in abstract method
+        doTest04();
+    }
+
+    /**
+     * PECS--PE
+     */
+    void doTest04() {
+//        Container<Object> container = new Container<String>(); // 编译异常，因为没有给泛型指定协变
+//        Container<? extends Object> container = new Container<String>(); // 编译正常，给泛型指定了协变
+//        container.setItem("xx");// 编译异常，编译器仅仅知道 <? extends Object> 是 Object的一个子类，但是并不知道是哪一个
+//       Object data = container.getItem();   // 编译正常，因此对于泛型上限 是生产者，仅仅能读取元素
+    }
+
+    /**
+     * PECS--CS
+     */
+    void doTest05() {
+//        Container<String> container = new Container<Object>();// 编译异常，因为没有给泛型进行逆变
+//        Container<? super String> container = new Container<String>(); // 编译正常，此处进行了逆变
+//        container.setItem("name"); // 编译正常，因为这里是将String的值 赋值给了 <? super String>
+//        String data = container.getItem(); // 编译异常，左边<右边
     }
 }
